@@ -25,7 +25,7 @@ public class ProductController {
     public ResponseEntity<Product> getById(@PathVariable int id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        product.add(linkTo(methodOn(ProductController.class).findAll()).withRel("Lista de Produtos"));
+        product.add(linkTo(methodOn(ProductController.class).findAll()).withRel("products"));
 
         return ResponseEntity.ok(product);
     }
