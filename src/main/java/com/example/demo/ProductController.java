@@ -22,6 +22,8 @@ public class ProductController {
 
     private final ProductRepository productRepository;
 
+    private final ProductModelAssembler productModelAssembler;
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EntityModel<Product> getById(@PathVariable int id) {
@@ -30,10 +32,7 @@ public class ProductController {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return EntityModel.of(product,
-                linkTo(methodOn(ProductController.class).findAll()).withRel("products"),
-                linkTo(methodOn(ProductController.class).getById(product.getId())).withSelfRel()
-        );
+        return productModelAssembler.toModel(product);
     }
 
     @GetMapping
@@ -43,10 +42,9 @@ public class ProductController {
 
         List<Product> products = productRepository.findAll();
 
-        List<EntityModel<Product>> productList = products.stream().map(product -> EntityModel.of(product,
-                linkTo(methodOn(ProductController.class).getById(product.getId())).withSelfRel(),
-                linkTo(methodOn(ProductController.class).findAll()).withRel("products")
-        )).collect(Collectors.toList());
+        List<EntityModel<Product>> productList = products.stream()
+                .map(productModelAssembler::toModel)
+                .collect(Collectors.toList());
 
         return CollectionModel.of(productList,
                 linkTo(methodOn(ProductController.class).findAll()).withSelfRel()
