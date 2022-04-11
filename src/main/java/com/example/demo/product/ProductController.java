@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.product;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

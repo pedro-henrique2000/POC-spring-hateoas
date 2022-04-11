@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.product;
 
 import lombok.NonNull;
 import org.springframework.hateoas.EntityModel;

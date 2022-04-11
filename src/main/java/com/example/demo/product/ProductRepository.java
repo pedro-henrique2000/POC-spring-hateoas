@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.product;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
