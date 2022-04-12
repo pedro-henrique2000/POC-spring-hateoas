@@ -30,6 +30,11 @@ public class ProductController {
     private final ProductModelAssembler productModelAssembler;
     private final PagedResourcesAssembler<Product> pagedResourcesAssembler;
 
+    @GetMapping("/list")
+    public ProductResponse getAll() {
+        return ProductResponse.builder().products(productRepository.findAll()).build();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<EntityModel<Product>> saveProduct(@RequestBody ProductDTO productDTO) {
