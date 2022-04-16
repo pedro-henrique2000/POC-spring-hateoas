@@ -31,8 +31,14 @@ public class ProductController {
     private final PagedResourcesAssembler<Product> pagedResourcesAssembler;
 
     @GetMapping("/list")
-    public ProductResponse getAll() {
+    public ProductResponse getAll() throws InterruptedException {
+//        Thread.sleep(5000L);
         return ProductResponse.builder().products(productRepository.findAll()).build();
+    }
+
+    @GetMapping("/normal/{id}")
+    public Product getByProductId(@PathVariable int id) {
+        return productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found Product with Id " + id));
     }
 
     @PostMapping
